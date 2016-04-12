@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-
 import React, {
   AppRegistry,
   Component,
@@ -13,25 +8,34 @@ import React, {
 } from 'react-native';
 
 class WeatherApp extends React.Component {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
-      fadeAnim: new Animated.Value(0), // init opacity 0
+      bounceValue: new Animated.Value(0),
     };
   }
-  componentDidMount() {
-    Animated.timing(          // Uses easing functions
-      this.state.fadeAnim,    // The value to drive
-      {toValue: 1}            // Configuration
-    ).start();                // Don't forget start!
-  }
-  render() {
+  render(): ReactElement {
     return (
-      <Animated.View          // Special animatable View
-        style={{opacity: this.state.fadeAnim}}>
-        {this.props.children}
-      </Animated.View>
+      <Animated.Image
+        source={{uri: 'http://i.imgur.com/XMKOH81.jpg'}}
+        style={{
+          flex: 1,
+          transform: [
+            {scale: this.state.bounceValue},
+          ]
+        }}
+      />
     );
+  }
+  componentDidMount() {
+    this.state.bounceValue.setValue(1.5);
+    Animated.spring(
+      this.state.bounceValue,
+      {
+        toValue: 0.8,
+        friction: 1,
+      }
+    ).start();
   }
 }
 
