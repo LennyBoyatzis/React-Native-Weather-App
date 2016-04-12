@@ -8,24 +8,29 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  View,
+  Animated
 } from 'react-native';
 
-class WeatherApp extends Component {
+class WeatherApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fadeAnim: new Animated.Value(0), // init opacity 0
+    };
+  }
+  componentDidMount() {
+    Animated.timing(          // Uses easing functions
+      this.state.fadeAnim,    // The value to drive
+      {toValue: 1}            // Configuration
+    ).start();                // Don't forget start!
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Animated.View          // Special animatable View
+        style={{opacity: this.state.fadeAnim}}>
+        {this.props.children}
+      </Animated.View>
     );
   }
 }
