@@ -10,13 +10,13 @@ class Forecast extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.bigText}>
-                    {this.props.main}
-                </Text>
-                <Text style={styles.mainText}>
-                    Current conditions: {this.props.description}
+                    {this.props.temp}°C
                 </Text>
                 <Text style={styles.bigText}>
-                    {this.props.temp}°C
+                    {this.props.description}
+                </Text>
+                <Text style={styles.mainText}>
+                    Friday, Nov 27
                 </Text>
             </View>
         )
@@ -32,17 +32,15 @@ var styles = StyleSheet.create({
         paddingTop: 30
     },
     bigText: {
-        flex: 2,
         fontSize: 20,
         textAlign: 'center',
-        margin: 10,
-        color: '#FFFFFF'
+        color: '#848F91'
     },
     mainText: {
         flex: 1,
         fontSize: BASE_FONT_SIZE,
         textAlign: 'center',
-        color: '#FFFFFF'
+        color: '#848F91'
     },
 });
 

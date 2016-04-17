@@ -4,7 +4,8 @@ import React, {
     Text,
     View,
     TextInput,
-    Image
+    Image,
+    Animated
 } from 'react-native';
 
 const Forecast = require('./components/Forecast');
@@ -13,46 +14,40 @@ class WeatherApp extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            zip: '',
-            forecast: {
-                main: 'Clouds',
-                description: 'few clouds',
-                temp: 23.7
-            }
+            bounceValue: new Animated.Value(0)
         }
     }
 
-    _handleTextChange(event) {
-        console.log("Hello", event.nativeEvent.text)
-        this.setState({
-            zip: event.nativeEvent.text
-        })
+    componentDidMount() {
+        this.state.bounceValue.setValue(1.5);
+        Animated.spring(
+            this.state.bounceValue,
+            {
+                toValue: 0.8,
+                friction: 1,
+            }
+        ).start(console.log("Completeeeddd"));
     }
 
     render() {
+        console.log("this.state.bounceValue", this.state.bounceValue)
         return (
             <View style={styles.container}>
-                <Image source={require('image!img')}
-                    resizeMode='cover'
-                    style={styles.backdrop}>
-                    <View style={styles.overlay}>
-                        <View style={styles.row}>
-                            <Text style={styles.mainText}>
-                                Current weather for
-                            </Text>
-                            <View style={styles.zipContainer}>
-                                <TextInput
-                                    style={[styles.zipContainer, styles.mainText]}
-                                    returnKeyType='go'
-                                    onSubmitEditing={this._handleTextChange.bind(this)} />
-                            </View>
-                        </View>
-                        <Forecast
-                        main={this.state.forecast.main}
-                        description={this.state.forecast.description}
-                        temp={this.state.forecast.temp} />
-                    </View>
-                </Image>
+                <View style={styles.houseSetting}>
+                    <Animated.Image
+                        style={[
+                            styles.sun,
+                            { transform: [
+                                {scale: this.state.bounceValue}
+                            ]}]}
+                        source={require('image!Sun')} />
+                    <Image
+                        source={require('image!House')} />
+                    <Image
+                        style={styles.treeTop}
+                        source={require('image!Tree')} />
+                </View>
+                <Forecast temp={23} description='Sunny'/>
             </View>
         )
     }
@@ -64,42 +59,20 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 30
+        backgroundColor: '#ECECFA'
     },
-    backdrop: {
-        flex: 1,
-        flexDirection: 'column'
+    houseSetting: {
+        marginTop: 200
     },
-    overlay: {
-        paddingTop: 5,
-        backgroundColor: '#000000',
-        opacity: 0.5,
-        flexDirection: 'column',
-        alignItems: 'center'
+    treeTop: {
+        position: 'absolute',
+        right: -10,
+        bottom: 30,
     },
-    row: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        alignItems: 'flex-start',
-        padding: 30
-    },
-    zipContainer: {
-        flex: 1,
-        borderBottomColor: '#DDDDDD',
-        borderBottomWidth: 1,
-        marginLeft: 5,
-        marginTop: 3
-    },
-    zipCode: {
-        width: 50,
-        height: BASE_FONT_SIZE
-    },
-    mainText: {
-        flex: 1,
-        fontSize: BASE_FONT_SIZE,
-        color: '#FFFFFF'
-    },
+    sun: {
+        position: 'absolute',
+        left: -40
+    }
 });
 
 module.exports = WeatherApp
