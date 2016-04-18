@@ -47,12 +47,12 @@ class WeatherApp extends Component {
                 Animated.timing(this.state.cloudFloat, {
                     toValue: 5,
                     delay: 1000,
-                    duration: 3000
+                    duration: 2000
                 }),
                 Animated.timing(this.state.cloudOpacity, {
                     toValue: 1,
                     delay: 1000,
-                    duration: 3000
+                    duration: 2000
                 })
             ]),
             Animated.parallel([
@@ -73,9 +73,6 @@ class WeatherApp extends Component {
                     duration: 3000
                 })
             ])
-            // Animated.parallel([
-            //
-            // ])
         ]).start(console.log("Completeeeddd"));
     }
 
@@ -158,12 +155,12 @@ var styles = StyleSheet.create({
     clouds: {
         position: 'absolute',
         left: -50,
-        top: -20
+        top: -30
     },
     cloudsTwo: {
         position: 'absolute',
         right: 0,
-        top: -50
+        top: -70
     }
 });
 
